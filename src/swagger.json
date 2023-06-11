@@ -1,0 +1,31 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST-API",
+        "description": "F1 Racing App",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:5001",
+    "basePath": "",
+    "tags": [{
+        "name": "F1 Application",
+        "description": "API for F1 in the system"
+    }],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "schemes": ["http", "https"],
+    "paths": {},
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
