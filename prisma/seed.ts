@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { drivers, teamDrivers, teams } from "./data";
+import { drivers, raceResults, races, teamDrivers, teams } from "./data";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +14,12 @@ async function load() {
         await prisma.team_driver.deleteMany();
         console.log('Deleted records in team_driver table');
 
+        await prisma.race.deleteMany();
+        console.log('Deleted records in race table');
+
+        await prisma.race_result.deleteMany();
+        console.log('Deleted records in race_result table');
+
         await prisma.$queryRaw`ALTER TABLE team AUTO_INCREMENT = 1`;
         console.log('reset team auto increment to 1');
 
@@ -22,6 +28,12 @@ async function load() {
 
         await prisma.$queryRaw`ALTER TABLE team_driver AUTO_INCREMENT = 1`;
         console.log('reset team_driver auto increment to 1');
+
+        await prisma.$queryRaw`ALTER TABLE race AUTO_INCREMENT = 1`;
+        console.log('reset race auto increment to 1');
+
+        await prisma.$queryRaw`ALTER TABLE race_result AUTO_INCREMENT = 1`;
+        console.log('reset race_result auto increment to 1');
 
         await prisma.driver.createMany({
             data: drivers
@@ -37,6 +49,16 @@ async function load() {
             data: teamDrivers
         })
         console.log('Added team_driver data');
+
+        await prisma.race.createMany({
+            data: races
+        })
+        console.log('Added race data');
+
+        await prisma.race_result.createMany({
+            data: raceResults
+        })
+        console.log('Added race_result data');
     } catch (e) {
         console.error(e);
         process.exit(1);
