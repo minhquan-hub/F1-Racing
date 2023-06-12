@@ -2,48 +2,57 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
-model Driver {
-    id String @id @default(uuid())
-    full_name String 
-    avatar String
-    country String
-    date_of_birth DateTime
+model driver {
+    id             Int           @id @default(autoincrement())
+    full_name      String
+    avatar         String
+    country        String
+    date_of_birth  DateTime      @db.Date
     place_of_birth String
-    rank Int
-    podiums Int
-    Points Float
-    grands_prix_entered Int
-    world_championships Int
-    highest_race_finish String
-    highest_grid_position Int
-    team Team @relation(fields: [team_id], references: [id], name:"driver_team_id")
-    team_id String 
-    driver1_team Team[] @relation("driver1_team")
-    driver2_team Team[] @relation("driver2_team")
+    rank           Int
+    team_driver    team_driver[] @relation("driver_id")
 }
 
-model Team {
-    id String @id @default(uuid())
-    team_name String @unique
-    base String
-    team_chief String
-    chassis String
-    power_unit String
-    first_team_entry Int
-    world_championships Int
-    pole_positions Int
-    fastest_laps Int
-    driver_1 Driver @relation(fields: [driver1_id], references: [id], name:"driver1_team")
-    driver1_id String
-    driver_2 Driver @relation(fields: [driver2_id], references: [id], name:"driver2_team")
-    driver2_id String
-    team_driver Driver[] @relation("driver_team_id")
+model team {
+    id          Int           @id @default(autoincrement())
+    team_name   String        @unique
+    base        String
+    team_chief  String
+    team_driver team_driver[] @relation("team_id")
+}
+
+model team_driver {
+    id        Int    @id @default(autoincrement())
+    team      team   @relation(fields: [team_id], references: [id], name: "team_id")
+    team_id   Int
+    driver    driver @relation(fields: [driver_id], references: [id], name: "driver_id")
+    driver_id Int
+}
+
+model race {
+    id               Int           @id @default(autoincrement())
+    grand_prix       String
+    race_date        DateTime      @db.Date
+    race_result_link race_result[] @relation("race_result_link")
+}
+
+model race_result {
+    id      Int      @id @default(autoincrement())
+    race    race     @relation(fields: [race_id], references: [id], name: "race_result_link")
+    race_id Int
+    pos     Int
+    no      Int
+    driver  String
+    car     String
+    laps    Int
+    time    BigInt
+    pts     Int
 }
