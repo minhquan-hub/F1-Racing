@@ -53,6 +53,6 @@ model race_result {
     driver  String
     car     String
     laps    Int
-    time    BigInt
+    time    String
     pts     Int
 }
