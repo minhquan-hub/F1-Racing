@@ -1,5 +1,6 @@
 import { RaceDto, RaceYearGrandPrixRequestDto } from '../dtos';
 
 export interface IRaceService {
-  getAllRaces(query: RaceYearGrandPrixRequestDto): Promise<RaceDto[]>;
+  getAllRaces(raceQuery: RaceYearGrandPrixRequestDto): Promise<RaceDto[]>;
+  getRacesById(raceId: number): Promise<RaceDto[]>;
 }

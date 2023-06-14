@@ -1,8 +1,8 @@
 import BaseError from '../base_error';
 import { StatusCodes } from 'http-status-codes';
 
-export class Http400Error extends BaseError {
+export class NotFoundError extends BaseError {
   constructor() {
-    super(StatusCodes.BAD_REQUEST, true, 'Bad Request.');
+    super(StatusCodes.NOT_FOUND, true, 'Not Found.');
   }
 }

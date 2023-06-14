@@ -22,4 +22,11 @@ export class RaceResultController implements interfaces.Controller {
     const races = await this._raceResultService.getAllRaces(raceQuery);
     return res.status(StatusCodes.OK).json(races);
   }
+
+  @httpGet('/:raceId', RaceValidator.GetAllRacesByIdValidation)
+  async getRacesById(req: Request, res: Response) {
+    const { raceId } = req['params'];
+    const races = await this._raceResultService.getRacesById(Number(raceId));
+    return res.status(StatusCodes.OK).json(races);
+  }
 }
