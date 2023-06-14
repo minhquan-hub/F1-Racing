@@ -4,7 +4,7 @@ import { check, validationResult } from 'express-validator';
 import { InternalServerError } from '../error_handling';
 
 class RaceValidator {
-  async GetAllRacesValidation(req: Request, res: Response, next: NextFunction) {
+  async getAllRacesValidation(req: Request, res: Response, next: NextFunction) {
     try {
       await check('year')
         .optional({ nullable: true, checkFalsy: true })
@@ -33,7 +33,7 @@ class RaceValidator {
     }
   }
 
-  async GetAllRacesByIdValidation(
+  async getAllRacesByIdValidation(
     req: Request,
     res: Response,
     next: NextFunction,

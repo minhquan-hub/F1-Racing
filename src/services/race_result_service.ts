@@ -1,83 +1,50 @@
 import { injectable } from 'inversify';
-import { IRaceService } from '../interfaces';
+import { IRaceResultService } from '../interfaces';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { RaceDto, RaceYearGrandPrixRequestDto } from '../dtos';
+import { DriverRaceResultDto, RaceResultDto } from '../dtos';
 import { NotFoundError } from '../error_handling';
 
 @injectable()
-export class RaceResultService implements IRaceService {
+export class RaceResultService implements IRaceResultService {
   private _prisma: PrismaClient;
   constructor() {
     this._prisma = new PrismaClient();
   }
 
-  async getAllRaces(
-    raceQuery: RaceYearGrandPrixRequestDto,
-  ): Promise<RaceDto[]> {
-    const raceDtos: RaceDto[] = [];
+  async getDriverRaceResultByYear(
+    year: number,
+    driverId: number,
+  ): Promise<DriverRaceResultDto> {
+    const raceResultDto: RaceResultDto[] = [];
 
-    const conditions: Prisma.Sql[] = [];
-    if (raceQuery.year) {
-      conditions.push(Prisma.sql`YEAR(r.race_date) = ${raceQuery.year}`);
-    }
+    const driverRaceResult: any = await this._prisma
+      .$queryRaw(Prisma.sql`SELECT * FROM race_result AS rr
+    JOIN race AS r ON r.id = rr.race_id 
+    JOIN driver AS d ON d.id = rr.driver_id WHERE rr.driver_id = ${driverId} AND YEAR(r.race_date) = ${year}`);
 
-    if (raceQuery.grandPrix) {
-      conditions.push(Prisma.sql`r.grand_prix = ${raceQuery.grandPrix}`);
-    }
-
-    const where = conditions.length
-      ? Prisma.sql`where ${Prisma.join(conditions, ' and ')}`
-      : Prisma.empty;
-
-    const races: any[] = await this._prisma
-      .$queryRaw(Prisma.sql`SELECT * FROM race AS r   
-        JOIN race_result AS rr ON rr.race_id = r.id AND pos = 1 ${where}`);
-
-    races.forEach((race) => {
-      raceDtos.push({
-        raceId: race.race_id,
-        grandPrix: race.grand_prix,
-        raceDate: race.race_date,
-        winner: race.driver,
-        car: race.car,
-        laps: race.laps,
-        time: new Date(Number(race.time)).toISOString().slice(11, 23),
-      });
-    });
-
-    return raceDtos;
-  }
-
-  async getRacesById(raceId: number): Promise<RaceDto[]> {
-    const raceDtos: RaceDto[] = [];
-
-    const raceCheck: any = await this._prisma.$queryRaw(
-      Prisma.sql`SELECT * FROM race WHERE id = ${raceId}`,
-    );
-
-    console.log(raceCheck);
-
-    if (raceCheck.length === 0) {
+    if (driverRaceResult.length === 0) {
       throw new NotFoundError();
     }
 
-    const races: any[] = await this._prisma.$queryRaw(
-      Prisma.sql`SELECT * FROM race AS r   
-      JOIN race_result AS rr ON rr.race_id = r.id WHERE rr.race_id = ${raceId}`,
-    );
-
-    races.forEach((race) => {
-      raceDtos.push({
-        raceId: race.race_id,
-        grandPrix: race.grand_prix,
-        raceDate: race.race_date,
-        winner: race.driver,
-        car: race.car,
-        laps: race.laps,
-        time: new Date(Number(race.time)).toISOString().slice(11, 23),
+    driverRaceResult.forEach((raceResult) => {
+      raceResultDto.push({
+        car: raceResult.car,
+        pos: raceResult.pos,
+        grandPrix: raceResult.grand_prix,
+        raceDate: raceResult.race_date,
+        pts: raceResult.pts,
+        laps: raceResult.laps,
+        time: new Date(Number(raceResult.time)).toISOString().slice(11, 23),
       });
     });
 
-    return raceDtos;
+    const driverRaceResultDto: DriverRaceResultDto = {
+      driverId: driverRaceResult[0].driver_id,
+      fullName: driverRaceResult[0].full_name,
+      no: driverRaceResult[0].no,
+      raceResult: raceResultDto,
+    };
+
+    return driverRaceResultDto;
   }
 }

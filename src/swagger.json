@@ -47,7 +47,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "#ref": "#/definitions/Race"
+                                    "#ref": "#/definitions/RaceResponse"
                                 }
                             }
                         }
@@ -81,7 +81,54 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "#ref": "#/definitions/Race"
+                                    "#ref": "#/definitions/RaceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/race-result/driver/{year}/{driverId}": {
+            "get": {
+                "tags": ["Race Result"],
+                "summary": "Get driver race result by year and driverId in the system",
+                "parameters": [{
+                        "in": "path",
+                        "name": "year",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input year"
+                    },
+                    {
+                        "in": "path",
+                        "name": "driverId",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input driverId"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/RaceResultResponse"
                                 }
                             }
                         }
@@ -100,7 +147,7 @@
         }
     },
     "definitions": {
-        "Race": {
+        "RaceResponse": {
             "type": "object",
             "properties": {
                 "raceId": {
@@ -136,15 +183,59 @@
                 "time": "01:33:56.740"
             }
         },
-        "GetAllRacesRequest": {
+        "DriverRaceResultResponse": {
             "type": "object",
             "properties": {
-                "year": {
+                "driverId": {
+                    "type": "number"
+                },
+                "fullName": {
                     "type": "string"
                 },
-                "grandPrix": {
-                    "type": "string"
+                "no": {
+                    "type": "number"
+                },
+                "raceResult": {
+                    "type": "object",
+                    "properties": {
+                        "car": {
+                            "type": "string"
+                        },
+                        "pos": {
+                            "type": "number"
+                        },
+                        "grandPrix": {
+                            "type": "string"
+                        },
+                        "raceDate": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "pts": {
+                            "type": "number"
+                        },
+                        "laps": {
+                            "type": "number"
+                        },
+                        "time": {
+                            "type": "string"
+                        }
+                    }
                 }
+            },
+            "example": {
+                "driverId": 3,
+                "fullName": "Lewis Hamilton",
+                "no": 44,
+                "raceResult": [{
+                    "car": "MERCEDES",
+                    "pos": 5,
+                    "grandPrix": "Spain",
+                    "raceDate": "2022-05-22T00:00:00.000Z",
+                    "pts": 10,
+                    "laps": 66,
+                    "time": "01:38:15.014"
+                }]
             }
         }
     }
