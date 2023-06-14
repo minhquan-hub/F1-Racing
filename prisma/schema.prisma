@@ -11,30 +11,23 @@ datasource db {
 }
 
 model driver {
-    id             Int           @id @default(autoincrement())
-    full_name      String
-    avatar         String
-    country        String
-    date_of_birth  DateTime      @db.Date
-    place_of_birth String
-    rank           Int
-    team_driver    team_driver[] @relation("driver_id")
+    id                 Int           @id @default(autoincrement())
+    team               team          @relation(fields: [team_id], references: [id], name: "team_driver")
+    team_id            Int
+    full_name          String
+    country            String
+    date_of_birth      DateTime      @db.Date
+    place_of_birth     String
+    rank               Int
+    race_result_driver race_result[] @relation("race_result_driver")
 }
 
 model team {
-    id          Int           @id @default(autoincrement())
-    team_name   String        @unique
-    base        String
-    team_chief  String
-    team_driver team_driver[] @relation("team_id")
-}
-
-model team_driver {
-    id        Int    @id @default(autoincrement())
-    team      team   @relation(fields: [team_id], references: [id], name: "team_id")
-    team_id   Int
-    driver    driver @relation(fields: [driver_id], references: [id], name: "driver_id")
-    driver_id Int
+    id         Int      @id @default(autoincrement())
+    team_name  String   @unique
+    base       String
+    team_chief String
+    team_drive driver[] @relation("team_driver")
 }
 
 model race {
@@ -45,14 +38,15 @@ model race {
 }
 
 model race_result {
-    id      Int      @id @default(autoincrement())
-    race    race     @relation(fields: [race_id], references: [id], name: "race_result_link")
-    race_id Int
-    pos     Int
-    no      Int
-    driver  String
-    car     String
-    laps    Int
-    time    String
-    pts     Int
+    id        Int    @id @default(autoincrement())
+    race      race   @relation(fields: [race_id], references: [id], name: "race_result_link")
+    race_id   Int
+    pos       Int
+    no        Int
+    driver    driver @relation(fields: [driver_id], references: [id], name: "race_result_driver")
+    driver_id Int
+    car       String
+    laps      Int
+    time      String
+    pts       Int
 }

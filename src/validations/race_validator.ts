@@ -7,6 +7,7 @@ class RaceValidator {
   async GetAllRacesValidation(req: Request, res: Response, next: NextFunction) {
     try {
       await check('year')
+        .optional({ nullable: true, checkFalsy: true })
         .isLength({ min: 4, max: 4 })
         .withMessage('The year length must be 4 character')
         .matches('^[0-9]*$')
@@ -15,7 +16,7 @@ class RaceValidator {
 
       await check('grandPrix')
         .optional({ nullable: true, checkFalsy: true })
-        .matches('^[A-Z]+$')
+        .matches('^[A-Za-z]+$')
         .withMessage('The grandPrix must be valid')
         .run(req);
 
