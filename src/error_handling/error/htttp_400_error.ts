@@ -1,12 +1,10 @@
 import BaseError from '../base_error';
-import {
-	StatusCodes
-} from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 class Http400Error extends BaseError {
-    constructor(description = 'bad request') {
-        super('NOT FOUND', StatusCodes.BAD_REQUEST, true, description)
-    }
+  constructor() {
+    super(StatusCodes.BAD_REQUEST, true, 'Bad Request');
+  }
 }
 
-export default Http400Error
+export default Http400Error;
