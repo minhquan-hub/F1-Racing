@@ -15,6 +15,7 @@ model driver {
     team               team          @relation(fields: [team_id], references: [id], name: "team_driver")
     team_id            Int
     full_name          String
+    no                 Int
     country            String
     date_of_birth      DateTime      @db.Date
     place_of_birth     String
@@ -42,7 +43,6 @@ model race_result {
     race      race   @relation(fields: [race_id], references: [id], name: "race_result_link")
     race_id   Int
     pos       Int
-    no        Int
     driver    driver @relation(fields: [driver_id], references: [id], name: "race_result_driver")
     driver_id Int
     car       String
