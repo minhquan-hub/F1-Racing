@@ -45,6 +45,7 @@ npm run seed
 ```
 
 ## Run the App
+Run the app with following command:
 ```sh
 npm run start
 ```
