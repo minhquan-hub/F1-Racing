@@ -49,7 +49,7 @@ Run the app with following command:
 ```sh
 npm run start
 ```
-Open your browser at localhost:5001 to see the running application.
+Open your browser at [localhost:5001](localhost:5001) to see the running application.
 
 ## Swagger Documentation
 ```sh
