@@ -30,13 +30,11 @@ class DriverValidator {
         .run(req);
 
       await check('country')
-        .notEmpty()
         .matches('^[A-Za-z]+$')
         .withMessage('The country must be valid')
         .run(req);
 
       await check('placeOfBirth')
-        .notEmpty()
         .matches('^[A-Za-z]+$')
         .withMessage('The placeOfBirth must be valid')
         .run(req);
