@@ -13,7 +13,7 @@
     "basePath": "",
     "tags": [{
         "name": "F1 Application",
-        "description": "API for F1 in the system"
+        "description": "API for F1 Application in the system"
     }],
     "consumes": ["application/json"],
     "produces": ["application/json"],
@@ -191,6 +191,62 @@
                     }
                 }
             }
+        },
+        "/api/driver": {
+            "get": {
+                "tags": ["Driver"],
+                "summary": "Get all driver in the system",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/DriverResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Driver"],
+                "summary": "Post create driver in the system",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Create new driver",
+                    "schema": {
+                        "$ref": "#/definitions/DriverCreateRequest"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/DriverResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -331,6 +387,82 @@
                 "pts": 8,
                 "laps": 57,
                 "time": "01:34:51.242"
+            }
+        },
+        "DriverCreateRequest": {
+            "type": "object",
+            "properties": {
+                "fullName": {
+                    "type": "string"
+                },
+                "no": {
+                    "type": "number"
+                },
+                "teamId": {
+                    "type": "number"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "placeOfBirth": {
+                    "type": "string"
+                },
+                "rank": {
+                    "type": "number"
+                }
+            },
+            "example": {
+                "fullName": "string",
+                "no": 0,
+                "teamId": 0,
+                "country": "string",
+                "dateOfBirth": "0000-00-00",
+                "placeOfBirth": "string",
+                "rank": 0
+            }
+        },
+        "DriverResponse": {
+            "type": "object",
+            "properties": {
+                "driverId": {
+                    "type": "number"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "no": {
+                    "type": "number"
+                },
+                "team": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "placeOfBirth": {
+                    "type": "string"
+                },
+                "rank": {
+                    "type": "number"
+                }
+            },
+            "example": {
+                "driverId": 18,
+                "fullName": "Nyck De Vries",
+                "no": 21,
+                "team": "Scuderia AlphaTauri",
+                "country": "Netherlands",
+                "dateOfBirth": "1995-02-06T00:00:00.000Z",
+                "placeOfBirth": "Uitwellingerga, Netherlands",
+                "rank": 19
             }
         }
     }

@@ -18,7 +18,8 @@ export class RaceResultService implements IRaceResultService {
     const driverRaceResult: any = await this._prisma
       .$queryRaw(Prisma.sql`SELECT * FROM race_result AS rr
     JOIN race AS r ON r.id = rr.race_id 
-    JOIN driver AS d ON d.id = rr.driver_id WHERE rr.driver_id = ${driverId} AND YEAR(r.race_date) = ${year}`);
+    JOIN driver AS d ON d.id = rr.driver_id 
+    WHERE rr.driver_id = ${driverId} AND YEAR(r.race_date) = ${year}`);
 
     if (driverRaceResult.length === 0) {
       throw new NotFoundError();
@@ -86,6 +87,4 @@ export class RaceResultService implements IRaceResultService {
 
     return driverRaceResultDto;
   }
-
-  customTeam;
 }
