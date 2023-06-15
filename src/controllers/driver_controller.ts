@@ -21,7 +21,7 @@ export class DriverController implements interfaces.Controller {
   }
 
   @httpGet('')
-  async getAllDriver(req: Request, res: Response) {
+  async getAllDrivers(req: Request, res: Response) {
     const drivers = await this._driverService.getAllDrivers();
     return res.status(StatusCodes.OK).json(drivers);
   }
