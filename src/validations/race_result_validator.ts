@@ -3,21 +3,25 @@ import { Request, Response, NextFunction } from 'express';
 import { check, validationResult } from 'express-validator';
 import { InternalServerError } from '../error_handling';
 
-class RaceValidator {
-  async getAllRacesValidation(req: Request, res: Response, next: NextFunction) {
+class RaceResultValidator {
+  async getDriverRaceResultValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
     try {
       await check('year')
-        .optional({ nullable: true, checkFalsy: true })
         .isLength({ min: 4, max: 4 })
         .withMessage('The year length must be 4 character')
+        .notEmpty()
         .matches('^[0-9]*$')
         .withMessage('The year must be valid')
         .run(req);
 
-      await check('grandPrix')
-        .optional({ nullable: true, checkFalsy: true })
-        .matches('^[A-Za-z]+$')
-        .withMessage('The grandPrix must be valid')
+      await check('driverId')
+        .notEmpty()
+        .matches('^[0-9]*$')
+        .withMessage('The driverId must be valid')
         .run(req);
 
       const result = validationResult(req);
@@ -33,7 +37,7 @@ class RaceValidator {
     }
   }
 
-  async getAllRacesByIdValidation(
+  async getDriverPositionValidation(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -43,6 +47,12 @@ class RaceValidator {
         .notEmpty()
         .matches('^[0-9]*$')
         .withMessage('The raceId must be valid')
+        .run(req);
+
+      await check('pos')
+        .notEmpty()
+        .matches('^[0-9]*$')
+        .withMessage('The pos must be valid')
         .run(req);
 
       const result = validationResult(req);
@@ -59,4 +69,4 @@ class RaceValidator {
   }
 }
 
-export default new RaceValidator();
+export default new RaceResultValidator();

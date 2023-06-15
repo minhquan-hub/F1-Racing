@@ -47,7 +47,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "#ref": "#/definitions/Race"
+                                    "#ref": "#/definitions/RaceResponse"
                                 }
                             }
                         }
@@ -81,7 +81,101 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "#ref": "#/definitions/Race"
+                                    "#ref": "#/definitions/RaceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/race-result/driver": {
+            "get": {
+                "tags": ["Race Result"],
+                "summary": "Get driver race result by year and driverId in the system",
+                "parameters": [{
+                        "in": "query",
+                        "name": "year",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input year"
+                    },
+                    {
+                        "in": "query",
+                        "name": "driverId",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input driverId"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/DriverRaceResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/race-result/position": {
+            "get": {
+                "tags": ["Race Result"],
+                "summary": "Get driver position by raceId and pos in the system",
+                "parameters": [{
+                        "in": "query",
+                        "name": "raceId",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input raceId"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pos",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input pos"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/DriverPositionResponse"
                                 }
                             }
                         }
@@ -100,7 +194,7 @@
         }
     },
     "definitions": {
-        "Race": {
+        "RaceResponse": {
             "type": "object",
             "properties": {
                 "raceId": {
@@ -136,15 +230,107 @@
                 "time": "01:33:56.740"
             }
         },
-        "GetAllRacesRequest": {
+        "DriverRaceResultResponse": {
             "type": "object",
             "properties": {
-                "year": {
+                "driverId": {
+                    "type": "number"
+                },
+                "fullName": {
                     "type": "string"
+                },
+                "no": {
+                    "type": "number"
+                },
+                "raceResult": {
+                    "type": "object",
+                    "properties": {
+                        "car": {
+                            "type": "string"
+                        },
+                        "pos": {
+                            "type": "number"
+                        },
+                        "grandPrix": {
+                            "type": "string"
+                        },
+                        "raceDate": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "pts": {
+                            "type": "number"
+                        },
+                        "laps": {
+                            "type": "number"
+                        },
+                        "time": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "example": {
+                "driverId": 3,
+                "fullName": "Lewis Hamilton",
+                "no": 44,
+                "raceResult": [{
+                    "car": "MERCEDES",
+                    "pos": 5,
+                    "grandPrix": "Spain",
+                    "raceDate": "2022-05-22T00:00:00.000Z",
+                    "pts": 10,
+                    "laps": 66,
+                    "time": "01:38:15.014"
+                }]
+            }
+        },
+        "DriverPositionResponse": {
+            "type": "object",
+            "properties": {
+                "driverId": {
+                    "type": "number"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "no": {
+                    "type": "number"
+                },
+                "car": {
+                    "type": "string"
+                },
+                "pos": {
+                    "type": "number"
                 },
                 "grandPrix": {
                     "type": "string"
+                },
+                "raceDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "pts": {
+                    "type": "number"
+                },
+                "laps": {
+                    "type": "number"
+                },
+                "time": {
+                    "type": "string"
                 }
+            },
+            "example": {
+                "driverId": 6,
+                "fullName": "Lance Stroll",
+                "no": 18,
+                "car": "ASTON MARTIN ARAMCO MERCEDES",
+                "pos": 6,
+                "grandPrix": "Bahrain",
+                "raceDate": "2023-03-05T00:00:00.000Z",
+                "pts": 8,
+                "laps": 57,
+                "time": "01:34:51.242"
             }
         }
     }

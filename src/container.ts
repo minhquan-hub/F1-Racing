@@ -1,9 +1,12 @@
 import { Container } from 'inversify';
 import TYPES from '../type';
-import { IRaceService } from './interfaces';
-import { RaceResultService } from './services';
+import { IRaceResultService, IRaceService } from './interfaces';
+import { RaceResultService, RaceService } from './services';
 
 const container = new Container();
-container.bind<IRaceService>(TYPES.IRaceService).to(RaceResultService);
+container.bind<IRaceService>(TYPES.IRaceService).to(RaceService);
+container
+  .bind<IRaceResultService>(TYPES.IRaceResultService)
+  .to(RaceResultService);
 
 export { container };
