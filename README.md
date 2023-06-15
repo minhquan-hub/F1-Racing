@@ -6,6 +6,11 @@
 - [Prisma](https://www.prisma.io/docs)
 
 ## Set up the database (mysql)
+First, Create new database in mysql.
+```sh
+CREATE DATABASE IF NOT EXISTS your_database_name.
+```
+
 Create `.env` file same `.env.example` file. After, update the `username`, `password` and `database`.
 ```sh
 DATABASE_URL="mysql://<username>:<password>@localhost:3306/<database>"
