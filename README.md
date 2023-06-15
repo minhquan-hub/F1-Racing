@@ -31,9 +31,7 @@ Migrate schema into your database.
 ```sh
 npm run migrate:mysql
 ```
-```text
-If you change the schema, it will ask you `Enter a name for the new migration:` 
-```
+>If you change the schema, it will ask you `Enter a name for the new migration:` 
 
 Generate the schema, and then migrate it into your database.
 
