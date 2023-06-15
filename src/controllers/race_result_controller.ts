@@ -19,7 +19,7 @@ export class RaceResultController implements interfaces.Controller {
 
   @httpGet('/driver', RaceResultValidator.getDriverRaceResultValidation)
   async getDriverRaceResultByYear(req: Request, res: Response) {
-    const { year, driverId } = req['query'];
+    const { year, driverId } = req.query;
     const driverRaceResult =
       await this._raceResultService.getDriverRaceResultByYear(year, driverId);
     return res.status(StatusCodes.OK).json(driverRaceResult);
@@ -27,8 +27,7 @@ export class RaceResultController implements interfaces.Controller {
 
   @httpGet('/position', RaceResultValidator.getDriverPositionValidation)
   async getDriverPosition(req: Request, res: Response) {
-    const { raceId, pos } = req['query'];
-    console.log(raceId);
+    const { raceId, pos } = req.query;
     const driverPosition = await this._raceResultService.getDriverPosition(
       raceId,
       pos,

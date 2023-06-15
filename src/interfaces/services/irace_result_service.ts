@@ -1,4 +1,4 @@
-import { DriverPositionDto, DriverRaceResultDto } from '../dtos';
+import { DriverPositionDto, DriverRaceResultDto } from '../../dtos';
 
 export interface IRaceResultService {
   getDriverRaceResultByYear(

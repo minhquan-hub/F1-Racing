@@ -1,4 +1,4 @@
-import { RaceDto, RaceYearGrandPrixRequestDto } from '../dtos';
+import { RaceDto, RaceYearGrandPrixRequestDto } from '../../dtos';
 
 export interface IRaceService {
   getAllRaces(raceQuery: RaceYearGrandPrixRequestDto): Promise<RaceDto[]>;

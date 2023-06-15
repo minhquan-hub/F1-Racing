@@ -18,14 +18,14 @@ export class RaceController implements interfaces.Controller {
 
   @httpGet('', RaceValidator.getAllRacesValidation)
   async getAllRaces(req: Request, res: Response) {
-    const raceQuery: RaceYearGrandPrixRequestDto = req['query'];
+    const raceQuery: RaceYearGrandPrixRequestDto = req.query;
     const races = await this._raceService.getAllRaces(raceQuery);
     return res.status(StatusCodes.OK).json(races);
   }
 
   @httpGet('/:raceId', RaceValidator.getAllRacesByIdValidation)
   async getRacesById(req: Request, res: Response) {
-    const { raceId } = req['params'];
+    const { raceId } = req.params;
     const races = await this._raceService.getRacesById(Number(raceId));
     return res.status(StatusCodes.OK).json(races);
   }
