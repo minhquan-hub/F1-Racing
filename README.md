@@ -66,7 +66,7 @@ http://localhost:5001/swagger
 ```sh
 http://localhost:5001/api/race?year=2023&grandPrix=Miami
 ```
->This Api has data 3 races (`Bahrain 2023, Miami 2023, 2022 Spain`). `For example: year=2023, grandPrix=Miami`. The year and grandPrix are optional. You can input or not. If your request data does't exist into database, it will return []
+>This Api has data 3 races (`Bahrain 2023, Miami 2023, 2022 Spain`). `For example: year=2023, grandPrix=Miami`. The year and grandPrix are optional. You can input or not. If your request data does't exist into database, it will return [].
 
 - Get all races by raceId
 ```sh
@@ -90,9 +90,9 @@ http://localhost:5001/api/race-result/position?raceId=1&pos=1
 ```sh
 http://localhost:5001/api/driver
 ```
->This Api has 20 drivers information.
+>This Api has 20 drivers information data.
 
-Post: Post create driver information
+- Post create driver information
 ```sh
 http://localhost:5001/api/driver
 ```
