@@ -39,7 +39,7 @@ npm run migrate:mysql
 ```
 >If you change the schema, it will ask you `Enter a name for the new migration:` 
 
-Generate the schema, and then migrate it into your database.
+Generate the schema. After, You migrate it into your database.
 
 ```sh
 npm run generate
@@ -62,34 +62,31 @@ npm run start
 http://localhost:5001/swagger
 ```
 
-- Race:
-Get: Get all races by year or grandPrix.
+- Get all races by year or grandPrix.
 ```sh
 http://localhost:5001/api/race?year=2023&grandPrix=Miami
 ```
 >This Api has data 3 races (`Bahrain 2023, Miami 2023, 2022 Spain`). `For example: year=2023, grandPrix=Miami`. The year and grandPrix are optional. You can input or not. If your request data does't exist into database, it will return []
 
-Get: Get all races by raceId
+- Get all races by raceId
 ```sh
 http://localhost:5001/api/race/1
 ```
 > This Api has all races from 2022 to 2023 (The total is 30 races). `For example: raceId=1`. If your request data does't exist into database, it will return `404: Not Found`.
 
-- Race Result:
-Get: Get driver race result by year and driverId
+- Get driver race result by year and driverId
 ```sh
 http://localhost:5001/api/race-result/driver?year=2023&driverId=1
 ```
 >This Api has data 60 race results of 3 races (`Bahrain 2023, Miami 2023, 2022 Spain`). `For example: year=2022, driverId=1`. If your request data does't exist into database, it will return `404: Not Found`.
 
-Get: Get driver position by raceId and position
+- Get driver position by raceId and position
 ```sh
 http://localhost:5001/api/race-result/position?raceId=1&pos=1
 ```
 >This Api will query follow race results of 3 races (`Bahrain 2023, Miami 2023, 2022 Spain`). `For example: raceId=1, pos=1`. If your request data does't exist into database, it will return `404: Not Found`.
 
-- Driver
-Get: Get all driver information
+- Get all driver information
 ```sh
 http://localhost:5001/api/driver
 ```
