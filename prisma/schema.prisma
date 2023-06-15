@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model driver {
+    id                 Int           @id @default(autoincrement())
+    team               team          @relation(fields: [team_id], references: [id], name: "team_driver")
+    team_id            Int
+    full_name          String
+    no                 Int
+    country            String
+    date_of_birth      DateTime      @db.Date
+    place_of_birth     String
+    rank               Int
+    race_result_driver race_result[] @relation("race_result_driver")
+}
+
+model team {
+    id         Int      @id @default(autoincrement())
+    team_name  String   @unique
+    base       String
+    team_chief String
+    team_drive driver[] @relation("team_driver")
+}
+
+model race {
+    id               Int           @id @default(autoincrement())
+    grand_prix       String
+    race_date        DateTime      @db.Date
+    race_result_link race_result[] @relation("race_result_link")
+}
+
+model race_result {
+    id        Int    @id @default(autoincrement())
+    race      race   @relation(fields: [race_id], references: [id], name: "race_result_link")
+    race_id   Int
+    pos       Int
+    driver    driver @relation(fields: [driver_id], references: [id], name: "race_result_driver")
+    driver_id Int
+    car       String
+    laps      Int
+    time      String
+    pts       Int
+}
