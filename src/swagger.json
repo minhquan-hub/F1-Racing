@@ -98,12 +98,12 @@
                 }
             }
         },
-        "/api/race-result/driver/{year}/{driverId}": {
+        "/api/race-result/driver": {
             "get": {
                 "tags": ["Race Result"],
                 "summary": "Get driver race result by year and driverId in the system",
                 "parameters": [{
-                        "in": "path",
+                        "in": "query",
                         "name": "year",
                         "required": true,
                         "schema": {
@@ -112,7 +112,7 @@
                         "description": "Please input year"
                     },
                     {
-                        "in": "path",
+                        "in": "query",
                         "name": "driverId",
                         "required": true,
                         "schema": {
@@ -128,7 +128,54 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "#ref": "#/definitions/RaceResultResponse"
+                                    "#ref": "#/definitions/DriverRaceResultResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error."
+                    }
+                }
+            }
+        },
+        "/api/race-result/position": {
+            "get": {
+                "tags": ["Race Result"],
+                "summary": "Get driver position by raceId and pos in the system",
+                "parameters": [{
+                        "in": "query",
+                        "name": "raceId",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input raceId"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pos",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Please input pos"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "#ref": "#/definitions/DriverPositionResponse"
                                 }
                             }
                         }
@@ -236,6 +283,54 @@
                     "laps": 66,
                     "time": "01:38:15.014"
                 }]
+            }
+        },
+        "DriverPositionResponse": {
+            "type": "object",
+            "properties": {
+                "driverId": {
+                    "type": "number"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "no": {
+                    "type": "number"
+                },
+                "car": {
+                    "type": "string"
+                },
+                "pos": {
+                    "type": "number"
+                },
+                "grandPrix": {
+                    "type": "string"
+                },
+                "raceDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "pts": {
+                    "type": "number"
+                },
+                "laps": {
+                    "type": "number"
+                },
+                "time": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "driverId": 6,
+                "fullName": "Lance Stroll",
+                "no": 18,
+                "car": "ASTON MARTIN ARAMCO MERCEDES",
+                "pos": 6,
+                "grandPrix": "Bahrain",
+                "raceDate": "2023-03-05T00:00:00.000Z",
+                "pts": 8,
+                "laps": 57,
+                "time": "01:34:51.242"
             }
         }
     }

@@ -17,14 +17,22 @@ export class RaceResultController implements interfaces.Controller {
     this._raceResultService = raceResultService;
   }
 
-  @httpGet(
-    '/driver/:year/:driverId',
-    RaceResultValidator.getDriverRaceResultValidation
-  )
+  @httpGet('/driver', RaceResultValidator.getDriverRaceResultValidation)
   async getDriverRaceResultByYear(req: Request, res: Response) {
-    const { year, driverId } = req['params'];
+    const { year, driverId } = req['query'];
     const driverRaceResult =
       await this._raceResultService.getDriverRaceResultByYear(year, driverId);
     return res.status(StatusCodes.OK).json(driverRaceResult);
+  }
+
+  @httpGet('/position', RaceResultValidator.getDriverPositionValidation)
+  async getDriverPosition(req: Request, res: Response) {
+    const { raceId, pos } = req['query'];
+    console.log(raceId);
+    const driverPosition = await this._raceResultService.getDriverPosition(
+      raceId,
+      pos,
+    );
+    return res.status(StatusCodes.OK).json(driverPosition);
   }
 }

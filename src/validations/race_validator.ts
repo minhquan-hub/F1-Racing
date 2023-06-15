@@ -40,6 +40,7 @@ class RaceValidator {
   ) {
     try {
       await check('raceId')
+        .notEmpty()
         .matches('^[0-9]*$')
         .withMessage('The raceId must be valid')
         .run(req);
